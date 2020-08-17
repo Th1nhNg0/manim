@@ -1,12 +1,12 @@
 int partition(int a[], int low, int high) {
     int pivot = a[high];
-    int i = (low - 1);
+    int i = low;
     for (int j = low; j <= high - 1; j++) {
         if (a[j] < pivot) {
-            i++;
             swap(a[i], a[j]);
+            i++;
         }
     }
-    swap(a[i + 1], a[high]);
-    return (i + 1);
+    swap(a[i], a[high]);
+    return i;
 }

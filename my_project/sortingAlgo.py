@@ -181,7 +181,9 @@ class BubbleSort(Scene):
 
 class QuickSort(Scene):
     def construct(self):
-        a = list(range(14))
+
+        a = list(range(6))
+        random.seed(40)
         random.shuffle(a)
         a = [[i, None] for i in a]
         element = Group()
@@ -191,39 +193,86 @@ class QuickSort(Scene):
             )
             a[i][1] = rect
             element.add(rect)
-        element.arrange(RIGHT, aligned_edge=DOWN, buff=0.15).move_to(ORIGIN)
+        element.arrange(RIGHT, aligned_edge=DOWN,
+                        buff=0.1).scale(0.9).to_corner(DL).shift(UP/2)
+
+        codeStart = Code(file_name="my_project/code/quickSort_0.cpp",
+                         style="vscode").scale(0.8).to_edge(RIGHT)
+        codeStartR = CodeRunner([1, 1, 1, 2, 1], codeStart)
+        self.play(FadeInFrom(codeStart[0], RIGHT))
+        self.play(Write(codeStart[1]), Write(codeStart.code))
+        self.play(codeStartR.runTo(3))
         self.play(
             AnimationGroup(*[FadeInFrom(x, DOWN)
                              for x in element], lag_ratio=0.2),
             run_time=1,
         )
 
+        self.play(codeStartR.runTo(4))
+        self.play(FadeOutAndShift(codeStart, RIGHT))
+
+        code1 = Code(file_name="my_project/code/quickSort_1.cpp",
+                     style="vscode").scale(0.7).to_corner(UR).shift(DOWN)
+        codeRunner1 = CodeRunner([1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1], code1)
+        code2 = Code(file_name="my_project/code/quickSort_2.cpp",
+                     style="vscode").scale(0.7).next_to(code1, DOWN)
+        codeRunner2 = CodeRunner([1]*7, code1)
+        self.play(FadeInFrom(code1[0], RIGHT), FadeInFrom(code2[0], RIGHT))
+        self.play(Write(code1[1]), Write(code1.code),
+                  Write(code2[1]), Write(code2.code))
+        speed = 0.7
+
         def partition(low,  high):
+            self.play(code2[0].set_stroke, {
+                      "opacity": 0.5, "width": 8, "color": GREEN}, run_time=speed)
             pivot = a[high]
             i = low
+            self.play(FadeToColor(
+                a[high][1], YELLOW, run_time=speed)
+            )
+            ti = Text("i", font="hack", size=0.5).next_to(a[i][1], DOWN*2.5)
+            tj = Text("j", font="hack", size=0.5).next_to(a[i][1], DOWN)
+            self.play(FadeInFrom(ti, DOWN), run_time=speed)
             for j in range(low, high):
+                if j == low:
+                    self.play(FadeIn(tj), run_time=speed/2)
+                else:
+                    self.play(tj.next_to, a[j][1], DOWN, run_time=speed/2)
                 self.play(FadeToColor(
-                    a[j][1], YELLOW, rate_func=there_and_back_with_pause), run_time=0.5)
+                    a[j][1], YELLOW, rate_func=there_and_back_with_pause),  run_time=speed)
                 if (a[j] < pivot):
                     a[i], a[j] = a[j], a[i]
                     if (a[i][1] != a[j][1]):
                         self.play(a[i][1].set_x, a[j][1].get_x(),
-                                  a[j][1].set_x, a[i][1].get_x())
+                                  a[j][1].set_x, a[i][1].get_x(), run_time=speed)
                     i += 1
+                    self.play(ti.next_to, a[i][1], DOWN*2.5,
+                              run_time=speed/2)
             a[i], a[high] = a[high], a[i]
-            self.play(a[i][1].set_x, a[high][1].get_x(),
-                      a[high][1].set_x, a[i][1].get_x())
+            self.play(
+                FadeOutAndShift(tj, DOWN), run_time=speed/2)
+            self.play(a[i][1].set_color, GREEN,
+                      a[i][1].set_x, a[high][1].get_x(),
+                      a[high][1].set_x, a[i][1].get_x(), run_time=speed)
+            self.play(FadeOutAndShift(ti, DOWN), code2[0].set_stroke, {
+                      "opacity": 0}, run_time=speed)
             return i
 
         def quickSort(low, high):
+            self.play(code1[0].set_stroke, {
+                      "opacity": 0.5, "width": 8, "color": GREEN}, run_time=speed)
             if (low < high):
                 g = Group(*[x[1] for x in a[low:high+1]])
-                self.play(g.shift, UP/3)
+                self.play(g.shift, UP/3, run_time=speed)
+                self.play(codeRunner2.runTo(2), run_time=speed)
                 pi = partition(low, high)
+                self.play(codeRunner2.runTo(3), run_time=speed)
                 quickSort(low, pi - 1)
+                self.play(codeRunner2.runTo(4), run_time=speed)
                 quickSort(pi + 1, high)
                 self.play(g.shift, DOWN/3,
-                          g.set_color, GREEN)
+                          g.set_color, GREEN, run_time=speed)
+            self.play(code1[0].set_stroke, {"opacity": 0, }, run_time=speed)
         quickSort(0, len(a)-1)
         self.wait()
 
