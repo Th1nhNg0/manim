@@ -1,0 +1,16 @@
+colour
+numpy
+Pillow
+scipy
+tqdm
+pycairo
+pydub
+pygments
+pyreadline; sys_platform == 'win32'
+rich>=4.2.1
+sphinx-rtd-theme
+recommonmark>=0.5.0
+
+# for development only:
+# pytest
+# black
