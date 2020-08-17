@@ -182,7 +182,7 @@ class BubbleSort(Scene):
 class QuickSort(Scene):
     def construct(self):
 
-        a = list(range(4))
+        a = list(range(3))
         random.seed(40)
         random.shuffle(a)
         a = [[i, None] for i in a]
@@ -199,7 +199,8 @@ class QuickSort(Scene):
         codeStart = Code(file_name="my_project/code/quickSort_0.cpp",
                          style="vscode").scale(0.7).to_corner(UL)
         codeStartR = CodeRunner([1, 1, 1, 2, 1], codeStart)
-        self.play(FadeInFrom(codeStart[0], RIGHT))
+        codeStart.add(codeStartR)
+        self.play(FadeInFrom(codeStart[0], LEFT))
         self.play(Write(codeStart[1]), Write(codeStart.code))
         self.play(codeStartR.runTo(3))
         self.play(
@@ -209,21 +210,23 @@ class QuickSort(Scene):
         )
 
         self.play(codeStartR.runTo(4))
-        self.play(FadeOutAndShift(codeStart, RIGHT))
         code1 = Code(file_name="my_project/code/quickSort_1.cpp",
                      style="vscode").scale(0.6).to_corner(UL)
-        codeRunner1 = CodeRunner([1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1], code1)
+        code1.add(CodeRunner([1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1], code1))
         code2 = Code(file_name="my_project/code/quickSort_2.cpp",
                      style="vscode").scale(0.6).next_to(code1, RIGHT).align_to(code1, UP)
-        codeRunner2 = CodeRunner([1]*7, code2)
-        self.play(FadeInFrom(code1[0], LEFT), FadeInFrom(code2[0], UP))
-        self.play(Write(code1[1]), Write(code1.code),
-                  Write(code2[1]), Write(code2.code))
-        speed = 0.7
+        code2.add(CodeRunner([1]*7, code2))
+        self.play(LaggedStart(FadeInFrom(code2[0], UP), AnimationGroup(
+            Write(code2[1]), Write(code2.code)), lag_ratio=1))
+        self.play(FadeOutAndShift(codeStart, LEFT, run_time=1),
+                  LaggedStart(
+            FadeInFrom(code1[0], LEFT, run_time=1), AnimationGroup(Write(code1[1]), Write(code1.code), run_time=1), lag_ratio=1)
+        )
+        speed = 0.5
 
         def partition(low,  high):
             self.play(code1[0][0].set_stroke, {
-                      "opacity": 0.5, "width": 5, "color": GREEN},
+                      "opacity": 1, "width": 5, "color": GREEN},
                       code2[0][0].set_stroke, {"opacity": 0}, run_time=speed)
             pivot = a[high]
             i = low
@@ -269,35 +272,44 @@ class QuickSort(Scene):
 
         def quickSort(low, high):
             nonlocal code2
-            nonlocal codeRunner2
-            if not (low == 0 and high == len(a)-1):
-                self.play(FadeInFrom(code2, UP))
-            self.play(code2[0][0].set_stroke, {
-                      "opacity": 0.5, "width": 5, "color": GREEN}, run_time=speed)
+
             g = Group(*[x[1] for x in a[low:high+1]])
-            self.play(g.shift, UP/3, codeRunner2.runTo(1), run_time=speed)
+            tt = [g.shift, UP/3]
+            if not (low == 0 and high == len(a)-1):
+                tt += [FadeInFrom(code2, UP)]
+            self.play(*tt)
+            self.play(code2[0][0].set_stroke, {
+                      "opacity": 1, "width": 5, "color": GREEN}, run_time=speed)
+            self.play(code2[-1].runTo(1), run_time=speed)
             if (low < high):
-                self.play(codeRunner2.runTo(2), run_time=speed)
-                pi = partition(low, high)
-                self.play(codeRunner2.runTo(3), run_time=speed)
+                # self.play(codeRunner2.runTo(2), run_time=speed)
+                # pi = partition(low, high)
+                pi = high
+                self.play(code2[0][0].set_stroke, {
+                          "opacity": 0}, code2[-1].runTo(3), run_time=speed)
                 temp = code2
                 code2 = code2.deepcopy()
-                codeRunner2 = code2[-1]
-                codeRunner2.runTo(-1)
+                code2[-1].runTo(-1)
                 quickSort(low, pi - 1)
+                self.play(temp[0][0].set_stroke, {
+                          "opacity": 1}, run_time=speed)
                 self.play(temp[-1].runTo(4), run_time=speed)
+                self.play(temp[0][0].set_stroke, {
+                          "opacity": 0}, run_time=speed)
                 code2 = temp.deepcopy()
-                codeRunner2 = temp[-1]
-                codeRunner2.runTo(-1)
+                code2[-1].runTo(-1)
                 quickSort(pi + 1, high)
+                self.play(temp[0][0].set_stroke, {
+                    "opacity": 1}, run_time=speed)
                 code2 = temp
-                codeRunner2 = temp[-1]
+            self.play(code2[-1].runTo(5), run_time=speed)
             self.play(
                 g.shift, DOWN/3,
                 g.set_color, GREEN, code2[0][0].set_stroke, {
-                    "opacity": 0, }, codeRunner2.runTo(-1), run_time=speed)
-            if (low == 0 and high == len(a)-1):
+                    "opacity": 0, }, code2[-1].runTo(-1), run_time=speed)
+            if not (low == 0 and high == len(a)-1):
                 self.play(FadeOutAndShift(code2, UP))
+
         quickSort(0, len(a)-1)
         self.wait()
 

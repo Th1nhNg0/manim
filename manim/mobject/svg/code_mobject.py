@@ -417,7 +417,6 @@ class CodeRunner(VGroup):
             self.add(r)
         self.box_heights = box_heights
         self.currentLine = None
-        codeMobject.add(self)
 
     def runTo(self, lineIndex):
         if (lineIndex == -1 and self.currentLine != None):

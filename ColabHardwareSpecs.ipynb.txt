@@ -1,0 +1,484 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "ColabHardwareSpecs",
+      "version": "0.3.2",
+      "provenance": [],
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python2",
+      "display_name": "Python 2"
+    },
+    "accelerator": "GPU"
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/christianmerkwirth/colabs/blob/master/ColabHardwareSpecs.ipynb\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "metadata": {
+        "id": "OtZkW7ftIVci",
+        "colab_type": "code",
+        "outputId": "0b5ae9ac-5d23-4f33-c36b-d0793afe2d24",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 34
+        }
+      },
+      "cell_type": "code",
+      "source": [
+        "# What version of Tensorflow ?\n",
+        "\n",
+        "import tensorflow as tf\n",
+        "tf.__version__\n"
+      ],
+      "execution_count": 1,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "'1.13.0-rc2'"
+            ]
+          },
+          "metadata": {
+            "tags": []
+          },
+          "execution_count": 1
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "gws0bXLSd4zX",
+        "colab_type": "code",
+        "outputId": "41599d89-1b80-4bab-f428-74ab1740bba0",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 51
+        }
+      },
+      "cell_type": "code",
+      "source": [
+        "# What OS are we running ?\n",
+        "!cat /etc/issue"
+      ],
+      "execution_count": 2,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Ubuntu 18.04.1 LTS \\n \\l\n",
+            "\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "v2TnK1tyLvuc",
+        "colab_type": "code",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 1720
+        },
+        "outputId": "ad2529e2-2224-4820-a653-c1427aefed44"
+      },
+      "cell_type": "code",
+      "source": [
+        "!cat /proc/cpuinfo\n",
+        "!cat /proc/meminfo"
+      ],
+      "execution_count": 3,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "processor\t: 0\n",
+            "vendor_id\t: GenuineIntel\n",
+            "cpu family\t: 6\n",
+            "model\t\t: 63\n",
+            "model name\t: Intel(R) Xeon(R) CPU @ 2.30GHz\n",
+            "stepping\t: 0\n",
+            "microcode\t: 0x1\n",
+            "cpu MHz\t\t: 2300.000\n",
+            "cache size\t: 46080 KB\n",
+            "physical id\t: 0\n",
+            "siblings\t: 2\n",
+            "core id\t\t: 0\n",
+            "cpu cores\t: 1\n",
+            "apicid\t\t: 0\n",
+            "initial apicid\t: 0\n",
+            "fpu\t\t: yes\n",
+            "fpu_exception\t: yes\n",
+            "cpuid level\t: 13\n",
+            "wp\t\t: yes\n",
+            "flags\t\t: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm invpcid_single pti ssbd ibrs ibpb stibp fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt arat arch_capabilities\n",
+            "bugs\t\t: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf\n",
+            "bogomips\t: 4600.00\n",
+            "clflush size\t: 64\n",
+            "cache_alignment\t: 64\n",
+            "address sizes\t: 46 bits physical, 48 bits virtual\n",
+            "power management:\n",
+            "\n",
+            "processor\t: 1\n",
+            "vendor_id\t: GenuineIntel\n",
+            "cpu family\t: 6\n",
+            "model\t\t: 63\n",
+            "model name\t: Intel(R) Xeon(R) CPU @ 2.30GHz\n",
+            "stepping\t: 0\n",
+            "microcode\t: 0x1\n",
+            "cpu MHz\t\t: 2300.000\n",
+            "cache size\t: 46080 KB\n",
+            "physical id\t: 0\n",
+            "siblings\t: 2\n",
+            "core id\t\t: 0\n",
+            "cpu cores\t: 1\n",
+            "apicid\t\t: 1\n",
+            "initial apicid\t: 1\n",
+            "fpu\t\t: yes\n",
+            "fpu_exception\t: yes\n",
+            "cpuid level\t: 13\n",
+            "wp\t\t: yes\n",
+            "flags\t\t: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm abm invpcid_single pti ssbd ibrs ibpb stibp fsgsbase tsc_adjust bmi1 avx2 smep bmi2 erms invpcid xsaveopt arat arch_capabilities\n",
+            "bugs\t\t: cpu_meltdown spectre_v1 spectre_v2 spec_store_bypass l1tf\n",
+            "bogomips\t: 4600.00\n",
+            "clflush size\t: 64\n",
+            "cache_alignment\t: 64\n",
+            "address sizes\t: 46 bits physical, 48 bits virtual\n",
+            "power management:\n",
+            "\n",
+            "MemTotal:       13335276 kB\n",
+            "MemFree:        11022872 kB\n",
+            "MemAvailable:   12541984 kB\n",
+            "Buffers:           70048 kB\n",
+            "Cached:          1609848 kB\n",
+            "SwapCached:            0 kB\n",
+            "Active:           649268 kB\n",
+            "Inactive:        1399216 kB\n",
+            "Active(anon):     345288 kB\n",
+            "Inactive(anon):      348 kB\n",
+            "Active(file):     303980 kB\n",
+            "Inactive(file):  1398868 kB\n",
+            "Unevictable:           0 kB\n",
+            "Mlocked:               0 kB\n",
+            "SwapTotal:             0 kB\n",
+            "SwapFree:              0 kB\n",
+            "Dirty:               936 kB\n",
+            "Writeback:             0 kB\n",
+            "AnonPages:        368496 kB\n",
+            "Mapped:           242748 kB\n",
+            "Shmem:               900 kB\n",
+            "Slab:             147784 kB\n",
+            "SReclaimable:     114720 kB\n",
+            "SUnreclaim:        33064 kB\n",
+            "KernelStack:        3952 kB\n",
+            "PageTables:         5520 kB\n",
+            "NFS_Unstable:          0 kB\n",
+            "Bounce:                0 kB\n",
+            "WritebackTmp:          0 kB\n",
+            "CommitLimit:     6667636 kB\n",
+            "Committed_AS:    1906424 kB\n",
+            "VmallocTotal:   34359738367 kB\n",
+            "VmallocUsed:           0 kB\n",
+            "VmallocChunk:          0 kB\n",
+            "AnonHugePages:         0 kB\n",
+            "ShmemHugePages:        0 kB\n",
+            "ShmemPmdMapped:        0 kB\n",
+            "HugePages_Total:       0\n",
+            "HugePages_Free:        0\n",
+            "HugePages_Rsvd:        0\n",
+            "HugePages_Surp:        0\n",
+            "Hugepagesize:       2048 kB\n",
+            "DirectMap4k:       90100 kB\n",
+            "DirectMap2M:     5152768 kB\n",
+            "DirectMap1G:    10485760 kB\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "whcbG0CbsfAQ",
+        "colab_type": "code",
+        "outputId": "50ea4cb2-3962-47e8-d770-15bdb69b1f26",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 221
+        }
+      },
+      "cell_type": "code",
+      "source": [
+        "# Memory footprint support libraries/code\n",
+        "!ln -sf /opt/bin/nvidia-smi /usr/bin/nvidia-smi\n",
+        "!pip install gputil\n",
+        "!pip install psutil\n",
+        "!pip install humanize\n",
+        "\n",
+        "import psutil\n",
+        "import humanize\n",
+        "import os\n",
+        "import GPUtil as GPU\n",
+        "\n",
+        "GPUs = GPU.getGPUs()\n",
+        "# XXX: only one GPU on Colab and isn’t guaranteed\n",
+        "gpu = GPUs[0]\n",
+        "\n",
+        "def printm():\n",
+        " process = psutil.Process(os.getpid())\n",
+        " print(\"Gen RAM Free: \" + humanize.naturalsize( psutil.virtual_memory().available ), \" | Proc size: \" + humanize.naturalsize( process.memory_info().rss))\n",
+        " print(\"GPU RAM Free: {0:.0f}MB | Used: {1:.0f}MB | Util {2:3.0f}% | Total {3:.0f}MB\".format(gpu.memoryFree, gpu.memoryUsed, gpu.memoryUtil*100, gpu.memoryTotal))\n",
+        "\n",
+        "printm()"
+      ],
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Collecting gputil\n",
+            "  Downloading https://files.pythonhosted.org/packages/ed/0e/5c61eedde9f6c87713e89d794f01e378cfd9565847d4576fa627d758c554/GPUtil-1.4.0.tar.gz\n",
+            "Building wheels for collected packages: gputil\n",
+            "  Building wheel for gputil (setup.py) ... \u001b[?25ldone\n",
+            "\u001b[?25h  Stored in directory: /root/.cache/pip/wheels/3d/77/07/80562de4bb0786e5ea186911a2c831fdd0018bda69beab71fd\n",
+            "Successfully built gputil\n",
+            "Installing collected packages: gputil\n",
+            "Successfully installed gputil-1.4.0\n",
+            "Requirement already satisfied: psutil in /usr/local/lib/python2.7/dist-packages (5.4.8)\n",
+            "Requirement already satisfied: humanize in /usr/local/lib/python2.7/dist-packages (0.5.1)\n",
+            "('Gen RAM Free: 12.8 GB', ' | Proc size: 319.7 MB')\n",
+            "GPU RAM Free: 11441MB | Used: 0MB | Util   0% | Total 11441MB\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "OrljEItktXzM",
+        "colab_type": "code",
+        "outputId": "86bc2ae2-f849-4613-91d4-37480942a890",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 153
+        }
+      },
+      "cell_type": "code",
+      "source": [
+        "# What storage have we got\n",
+        "!df -h"
+      ],
+      "execution_count": 5,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Filesystem      Size  Used Avail Use% Mounted on\n",
+            "overlay         359G   22G  319G   7% /\n",
+            "tmpfs           6.4G     0  6.4G   0% /dev\n",
+            "tmpfs           6.4G     0  6.4G   0% /sys/fs/cgroup\n",
+            "tmpfs           6.4G   12K  6.4G   1% /var/colab\n",
+            "/dev/sda1       365G   27G  339G   8% /opt/bin\n",
+            "shm             6.0G     0  6.0G   0% /dev/shm\n",
+            "tmpfs           6.4G     0  6.4G   0% /sys/firmware\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "qdKcMX2scPpu",
+        "colab_type": "code",
+        "outputId": "5a63dcdb-03f7-4877-9816-8a7cf136c58e",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 51
+        }
+      },
+      "cell_type": "code",
+      "source": [
+        "!df -h ."
+      ],
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Filesystem      Size  Used Avail Use% Mounted on\n",
+            "overlay         359G   22G  319G   7% /\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "tZ7O5sw4IOTS",
+        "colab_type": "code",
+        "outputId": "6e7d53ea-996e-4189-bf6d-ad6763e83f4e",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 85
+        }
+      },
+      "cell_type": "code",
+      "source": [
+        "# What version of CUDA is installed ?\n",
+        "!/usr/local/cuda/bin/nvcc --version"
+      ],
+      "execution_count": 7,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "nvcc: NVIDIA (R) Cuda compiler driver\n",
+            "Copyright (c) 2005-2018 NVIDIA Corporation\n",
+            "Built on Sat_Aug_25_21:08:01_CDT_2018\n",
+            "Cuda compilation tools, release 10.0, V10.0.130\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    },
+    {
+      "metadata": {
+        "id": "fu-68GEustbN",
+        "colab_type": "code",
+        "outputId": "c156a989-cdea-4903-a4e0-a3615e4850c3",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 1751
+        }
+      },
+      "cell_type": "code",
+      "source": [
+        "# This command will repeatedly print specs into the output. Use the stop button on the left to terminate.\n",
+        "!nvidia-smi -l 2"
+      ],
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "text": [
+            "Wed Feb 27 09:01:32 2019       \n",
+            "+-----------------------------------------------------------------------------+\n",
+            "| NVIDIA-SMI 410.79       Driver Version: 410.79       CUDA Version: 10.0     |\n",
+            "|-------------------------------+----------------------+----------------------+\n",
+            "| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |\n",
+            "| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |\n",
+            "|===============================+======================+======================|\n",
+            "|   0  Tesla K80           Off  | 00000000:00:04.0 Off |                    0 |\n",
+            "| N/A   31C    P8    27W / 149W |      0MiB / 11441MiB |      0%      Default |\n",
+            "+-------------------------------+----------------------+----------------------+\n",
+            "                                                                               \n",
+            "+-----------------------------------------------------------------------------+\n",
+            "| Processes:                                                       GPU Memory |\n",
+            "|  GPU       PID   Type   Process name                             Usage      |\n",
+            "|=============================================================================|\n",
+            "|  No running processes found                                                 |\n",
+            "+-----------------------------------------------------------------------------+\n",
+            "Wed Feb 27 09:01:34 2019       \n",
+            "+-----------------------------------------------------------------------------+\n",
+            "| NVIDIA-SMI 410.79       Driver Version: 410.79       CUDA Version: 10.0     |\n",
+            "|-------------------------------+----------------------+----------------------+\n",
+            "| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |\n",
+            "| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |\n",
+            "|===============================+======================+======================|\n",
+            "|   0  Tesla K80           Off  | 00000000:00:04.0 Off |                    0 |\n",
+            "| N/A   31C    P8    27W / 149W |      0MiB / 11441MiB |      0%      Default |\n",
+            "+-------------------------------+----------------------+----------------------+\n",
+            "                                                                               \n",
+            "+-----------------------------------------------------------------------------+\n",
+            "| Processes:                                                       GPU Memory |\n",
+            "|  GPU       PID   Type   Process name                             Usage      |\n",
+            "|=============================================================================|\n",
+            "|  No running processes found                                                 |\n",
+            "+-----------------------------------------------------------------------------+\n",
+            "Wed Feb 27 09:01:36 2019       \n",
+            "+-----------------------------------------------------------------------------+\n",
+            "| NVIDIA-SMI 410.79       Driver Version: 410.79       CUDA Version: 10.0     |\n",
+            "|-------------------------------+----------------------+----------------------+\n",
+            "| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |\n",
+            "| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |\n",
+            "|===============================+======================+======================|\n",
+            "|   0  Tesla K80           Off  | 00000000:00:04.0 Off |                    0 |\n",
+            "| N/A   31C    P8    27W / 149W |      0MiB / 11441MiB |      0%      Default |\n",
+            "+-------------------------------+----------------------+----------------------+\n",
+            "                                                                               \n",
+            "+-----------------------------------------------------------------------------+\n",
+            "| Processes:                                                       GPU Memory |\n",
+            "|  GPU       PID   Type   Process name                             Usage      |\n",
+            "|=============================================================================|\n",
+            "|  No running processes found                                                 |\n",
+            "+-----------------------------------------------------------------------------+\n",
+            "Wed Feb 27 09:01:38 2019       \n",
+            "+-----------------------------------------------------------------------------+\n",
+            "| NVIDIA-SMI 410.79       Driver Version: 410.79       CUDA Version: 10.0     |\n",
+            "|-------------------------------+----------------------+----------------------+\n",
+            "| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |\n",
+            "| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |\n",
+            "|===============================+======================+======================|\n",
+            "|   0  Tesla K80           Off  | 00000000:00:04.0 Off |                    0 |\n",
+            "| N/A   31C    P8    27W / 149W |      0MiB / 11441MiB |      0%      Default |\n",
+            "+-------------------------------+----------------------+----------------------+\n",
+            "                                                                               \n",
+            "+-----------------------------------------------------------------------------+\n",
+            "| Processes:                                                       GPU Memory |\n",
+            "|  GPU       PID   Type   Process name                             Usage      |\n",
+            "|=============================================================================|\n",
+            "|  No running processes found                                                 |\n",
+            "+-----------------------------------------------------------------------------+\n",
+            "Wed Feb 27 09:01:40 2019       \n",
+            "+-----------------------------------------------------------------------------+\n",
+            "| NVIDIA-SMI 410.79       Driver Version: 410.79       CUDA Version: 10.0     |\n",
+            "|-------------------------------+----------------------+----------------------+\n",
+            "| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |\n",
+            "| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |\n",
+            "|===============================+======================+======================|\n",
+            "|   0  Tesla K80           Off  | 00000000:00:04.0 Off |                    0 |\n",
+            "| N/A   31C    P8    27W / 149W |      0MiB / 11441MiB |      0%      Default |\n",
+            "+-------------------------------+----------------------+----------------------+\n",
+            "                                                                               \n",
+            "+-----------------------------------------------------------------------------+\n",
+            "| Processes:                                                       GPU Memory |\n",
+            "|  GPU       PID   Type   Process name                             Usage      |\n",
+            "|=============================================================================|\n",
+            "|  No running processes found                                                 |\n",
+            "+-----------------------------------------------------------------------------+\n",
+            "Wed Feb 27 09:01:42 2019       \n",
+            "+-----------------------------------------------------------------------------+\n",
+            "| NVIDIA-SMI 410.79       Driver Version: 410.79       CUDA Version: 10.0     |\n",
+            "|-------------------------------+----------------------+----------------------+\n",
+            "| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |\n",
+            "| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |\n",
+            "|===============================+======================+======================|\n",
+            "|   0  Tesla K80           Off  | 00000000:00:04.0 Off |                    0 |\n",
+            "| N/A   31C    P8    27W / 149W |      0MiB / 11441MiB |      0%      Default |\n",
+            "+-------------------------------+----------------------+----------------------+\n",
+            "                                                                               \n",
+            "+-----------------------------------------------------------------------------+\n",
+            "| Processes:                                                       GPU Memory |\n",
+            "|  GPU       PID   Type   Process name                             Usage      |\n",
+            "|=============================================================================|\n",
+            "|  No running processes found                                                 |\n",
+            "+-----------------------------------------------------------------------------+\n"
+          ],
+          "name": "stdout"
+        }
+      ]
+    }
+  ]
+}
