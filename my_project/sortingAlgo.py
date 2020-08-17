@@ -182,7 +182,7 @@ class BubbleSort(Scene):
 class QuickSort(Scene):
     def construct(self):
 
-        a = list(range(14))
+        a = list(range(4))
         random.seed(40)
         random.shuffle(a)
         a = [[i, None] for i in a]
@@ -268,6 +268,10 @@ class QuickSort(Scene):
             return i
 
         def quickSort(low, high):
+            nonlocal code2
+            nonlocal codeRunner2
+            if not (low == 0 and high == len(a)-1):
+                self.play(FadeInFrom(code2, UP))
             self.play(code2[0][0].set_stroke, {
                       "opacity": 0.5, "width": 5, "color": GREEN}, run_time=speed)
             g = Group(*[x[1] for x in a[low:high+1]])
@@ -276,13 +280,24 @@ class QuickSort(Scene):
                 self.play(codeRunner2.runTo(2), run_time=speed)
                 pi = partition(low, high)
                 self.play(codeRunner2.runTo(3), run_time=speed)
+                temp = code2
+                code2 = code2.deepcopy()
+                codeRunner2 = code2[-1]
+                codeRunner2.runTo(-1)
                 quickSort(low, pi - 1)
-                self.play(codeRunner2.runTo(4), run_time=speed)
+                self.play(temp[-1].runTo(4), run_time=speed)
+                code2 = temp.deepcopy()
+                codeRunner2 = temp[-1]
+                codeRunner2.runTo(-1)
                 quickSort(pi + 1, high)
+                code2 = temp
+                codeRunner2 = temp[-1]
             self.play(
                 g.shift, DOWN/3,
                 g.set_color, GREEN, code2[0][0].set_stroke, {
                     "opacity": 0, }, codeRunner2.runTo(-1), run_time=speed)
+            if (low == 0 and high == len(a)-1):
+                self.play(FadeOutAndShift(code2, UP))
         quickSort(0, len(a)-1)
         self.wait()
 
@@ -290,8 +305,14 @@ class QuickSort(Scene):
 class Test(Scene):
     def construct(self):
         a = Code(file_name="my_project/code/quickSort_1.cpp", style="vscode")
+        b = CodeRunner([1, 1, 1, 1, 1, 1], a)
         self.play(Write(a))
-        self.play(a[0][0].set_stroke, {
-                  "color": GREEN, "width": 8, "opacity": 1}, run_time=3)
-        self.play(a[0][0].set_stroke, {"opacity": 0}, run_time=1)
+        self.play(b.runTo(4))
+        a = a.deepcopy()
+        b = a[-1]
+        b.runTo(-1)
+        self.play(FadeInFrom(a, UP*2))
+        self.play(b.runTo(1))
+        self.play(b.runTo(-1))
+        self.play(FadeOutAndShift(a, UP*4))
         self.wait(3)
