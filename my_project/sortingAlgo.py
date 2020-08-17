@@ -179,6 +179,38 @@ class BubbleSort(Scene):
         self.play(*[FadeOutAndShift(x, direction=DOWN) for x in self.mobjects])
 
 
+class CallStack(VGroup):
+    def __init__(self, **kwargs):
+        VGroup.__init__(self, **kwargs)
+        self.add(Text("CallStack", font='hack', size=0.8))
+        self.add(BackgroundRectangle(self, color=WHITE, buff=0.3,
+                                     fill_opacity=0, stroke_width=3, stroke_opacity=1))
+        self.add(
+            Line(ORIGIN, DOWN*7, stroke_width=3).align_to(self, LEFT+DOWN))
+        self.add(
+            Line(ORIGIN, DOWN*7, stroke_width=3).align_to(self, RIGHT+DOWN))
+        self.length = 0
+
+    def push(self, text):
+        t = Text(text, size=0.4,
+                 font='hack')
+        t.add_to_back(Rectangle(color=WHITE, fill_opacity=0,
+                                stroke_width=3, stroke_opacity=1, width=self[1].get_width(), height=t.get_height()+0.4).move_to(t))
+        if (self.length == 0):
+            t.next_to(self[1], UP, buff=0)
+        else:
+            t.next_to(self[-1], UP, buff=0)
+        self.length += 1
+        self.add(t)
+        return t
+
+    def pop(self):
+        t = self[-1]
+        self.remove(t)
+        self.length -= 1
+        return t
+
+
 class QuickSort(Scene):
     def construct(self):
 
@@ -216,14 +248,8 @@ class QuickSort(Scene):
         code2 = Code(file_name="my_project/code/quickSort_2.cpp",
                      style="vscode").scale(0.6).next_to(code1, RIGHT).align_to(code1, UP)
         code2.add(CodeRunner([1]*7, code2))
-        callStack = Text("CallStack", font='hack', size=0.8)
-        callStack.add(BackgroundRectangle(callStack, color=WHITE, buff=0.3,
-                                          fill_opacity=0, stroke_width=3, stroke_opacity=1))
+        callStack = CallStack()
         callStack.to_corner(DR)
-        callStack.add(
-            Line(ORIGIN, DOWN*7, stroke_width=3).align_to(callStack, LEFT+DOWN))
-        callStack.add(
-            Line(ORIGIN, DOWN*7, stroke_width=3).align_to(callStack, RIGHT+DOWN))
         self.play(LaggedStart(FadeInFrom(code2[0], UP), AnimationGroup(
             Write(code2[1]), Write(code2.code)), lag_ratio=1))
         self.play(FadeOutAndShift(codeStart, LEFT, run_time=1),
@@ -231,11 +257,12 @@ class QuickSort(Scene):
             FadeInFrom(code1[0], LEFT, run_time=1), AnimationGroup(Write(code1[1]), Write(code1.code), run_time=1), lag_ratio=1),
             ShowCreation(callStack)
         )
-        t = Text("quickSort(a,4,14)", size=0.4,
-                 font='hack')
-        t.add(BackgroundRectangle(t, color=WHITE, buff=0.3, width=callStack[9].get_width(),
-                                  fill_opacity=0, stroke_width=3, stroke_opacity=1)).next_to(callStack[9], UP)
-        self.add(t)
+
+        callStack.push("hello")
+        callStack.push("con cac")
+        callStack.push("nhin cai ")
+        callStack.push("o hay the thang nhoc")
+        self.add(callStack.pop().set_color(RED))
         return
         speed = 0.5
 
