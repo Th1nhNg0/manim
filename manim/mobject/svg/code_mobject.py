@@ -35,19 +35,19 @@ import os
 
 class Code(VGroup):
     CONFIG = {
-        "tab_width": 3,
+        "tab_width": 1,
         "line_spacing": 0.1,
         "scale_factor": 0.5,
         "run_time": 1,
-        "font": "Monospac821 BT",
+        "font": "hack",
         "stroke_width": 0,
         "margin": 0.3,
         "indentation_char": "  ",
-        "background": "rectangle",  # or window
-        "corner_radius": 0.2,
+        "background": "window",  # or window
+        "corner_radius": 0.1,
         "insert_line_no": True,
         "line_no_from": 1,
-        "line_no_buff": 0.4,
+        "line_no_buff": 0.2,
         "style": "vim",
         "language": "cpp",
         "generate_html_file": False,
