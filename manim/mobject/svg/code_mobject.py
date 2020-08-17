@@ -3,7 +3,7 @@ from ...constants import *
 from ...container import Container
 from ...mobject.geometry import RoundedRectangle, Dot, Rectangle
 from ...mobject.shape_matchers import SurroundingRectangle
-from ...mobject.svg.text_mobject import Paragraph
+from ...mobject.svg.text_mobject import Paragraph, Text
 from ...mobject.types.vectorized_mobject import VGroup
 from ...animation.transform import Transform
 from ...animation.fading import FadeInFrom, FadeOutAndShift
@@ -110,8 +110,11 @@ class Code(VGroup):
                 UP * (height / 2 - 0.1 * 2 - 0.05)
                 + LEFT * (width / 2 - 0.1 * 5 - self.corner_radius / 2 - 0.05)
             )
-
-            self.background_mobject = VGroup(rrect, buttons)
+            language = Text(self.language, font=self.font,
+                            color="#fafafa", fill_opacity=0.6, size=0.5)
+            language.align_to(rrect, RIGHT).shift(
+                LEFT*0.25).align_to(buttons, DOWN)
+            self.background_mobject = VGroup(rrect, buttons, language)
             x = (height - forground.get_height()) / 2 - 0.1 * 3
             self.background_mobject.shift(forground.get_center())
             self.background_mobject.shift(UP * x)
