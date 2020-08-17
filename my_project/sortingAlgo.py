@@ -182,7 +182,7 @@ class BubbleSort(Scene):
 class QuickSort(Scene):
     def construct(self):
 
-        a = list(range(3))
+        a = list(range(14))
         random.seed(40)
         random.shuffle(a)
         a = [[i, None] for i in a]
@@ -216,12 +216,27 @@ class QuickSort(Scene):
         code2 = Code(file_name="my_project/code/quickSort_2.cpp",
                      style="vscode").scale(0.6).next_to(code1, RIGHT).align_to(code1, UP)
         code2.add(CodeRunner([1]*7, code2))
+        callStack = Text("CallStack", font='hack', size=0.8)
+        callStack.add(BackgroundRectangle(callStack, color=WHITE, buff=0.3,
+                                          fill_opacity=0, stroke_width=3, stroke_opacity=1))
+        callStack.to_corner(DR)
+        callStack.add(
+            Line(ORIGIN, DOWN*7, stroke_width=3).align_to(callStack, LEFT+DOWN))
+        callStack.add(
+            Line(ORIGIN, DOWN*7, stroke_width=3).align_to(callStack, RIGHT+DOWN))
         self.play(LaggedStart(FadeInFrom(code2[0], UP), AnimationGroup(
             Write(code2[1]), Write(code2.code)), lag_ratio=1))
         self.play(FadeOutAndShift(codeStart, LEFT, run_time=1),
                   LaggedStart(
-            FadeInFrom(code1[0], LEFT, run_time=1), AnimationGroup(Write(code1[1]), Write(code1.code), run_time=1), lag_ratio=1)
+            FadeInFrom(code1[0], LEFT, run_time=1), AnimationGroup(Write(code1[1]), Write(code1.code), run_time=1), lag_ratio=1),
+            ShowCreation(callStack)
         )
+        t = Text("quickSort(a,4,14)", size=0.4,
+                 font='hack')
+        t.add(BackgroundRectangle(t, color=WHITE, buff=0.3, width=callStack[9].get_width(),
+                                  fill_opacity=0, stroke_width=3, stroke_opacity=1)).next_to(callStack[9], UP)
+        self.add(t)
+        return
         speed = 0.5
 
         def partition(low,  high):
@@ -234,8 +249,10 @@ class QuickSort(Scene):
             self.play(FadeToColor(
                 a[high][1], YELLOW, run_time=speed)
             )
-            ti = Text("i", font="hack", size=0.5).next_to(a[i][1], DOWN*2.5)
-            tj = Text("j", font="hack", size=0.5).next_to(a[i][1], DOWN)
+            ti = Text("i", font="hack", size=0.4).next_to(
+                a[i][1], DOWN, buff=0.4)
+            tj = Text("j", font="hack", size=0.4).next_to(
+                a[i][1], DOWN, buff=0.1)
             self.play(codeRunner1.runTo(2), FadeInFrom(
                 ti, DOWN), run_time=speed)
             for j in range(low, high):
