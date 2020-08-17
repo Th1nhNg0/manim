@@ -179,6 +179,55 @@ class BubbleSort(Scene):
         self.play(*[FadeOutAndShift(x, direction=DOWN) for x in self.mobjects])
 
 
+class QuickSort(Scene):
+    def construct(self):
+        a = list(range(14))
+        random.shuffle(a)
+        a = [[i, None] for i in a]
+        element = Group()
+        for i in range(len(a)):
+            rect = Rectangle(
+                width=0.5, height=0.5 + a[i][0] * 0.2, color=WHITE, fill_opacity=0.3
+            )
+            a[i][1] = rect
+            element.add(rect)
+        element.arrange(RIGHT, aligned_edge=DOWN, buff=0.15).move_to(ORIGIN)
+        self.play(
+            AnimationGroup(*[FadeInFrom(x, DOWN)
+                             for x in element], lag_ratio=0.2),
+            run_time=1,
+        )
+
+        def partition(low,  high):
+            pivot = a[high]
+            i = low
+            for j in range(low, high):
+                self.play(FadeToColor(
+                    a[j][1], YELLOW, rate_func=there_and_back_with_pause), run_time=0.5)
+                if (a[j] < pivot):
+                    a[i], a[j] = a[j], a[i]
+                    if (a[i][1] != a[j][1]):
+                        self.play(a[i][1].set_x, a[j][1].get_x(),
+                                  a[j][1].set_x, a[i][1].get_x())
+                    i += 1
+            a[i], a[high] = a[high], a[i]
+            self.play(a[i][1].set_x, a[high][1].get_x(),
+                      a[high][1].set_x, a[i][1].get_x())
+            return i
+
+        def quickSort(low, high):
+            if (low < high):
+                g = Group(*[x[1] for x in a[low:high+1]])
+                self.play(g.shift, UP/3)
+                pi = partition(low, high)
+                quickSort(low, pi - 1)
+                quickSort(pi + 1, high)
+                self.play(g.shift, DOWN/3,
+                          g.set_color, GREEN)
+        quickSort(0, len(a)-1)
+        self.wait()
+
+
 class Test(Scene):
     def construct(self):
         a = Code(file_name="my_project/code/quickSort_1.cpp", style="vscode")
