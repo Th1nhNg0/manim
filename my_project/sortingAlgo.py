@@ -229,7 +229,7 @@ class QuickSort(Scene):
                         buff=0.2).to_corner(DL)
 
         codeStart = Code(file_name="my_project/code/quickSort_0.cpp",
-                         style="default").scale(0.7).to_corner(UL)
+                         style="vscode").scale(0.7).to_corner(UL)
         codeStartR = CodeRunner([1, 1, 1, 2, 1], codeStart)
         codeStart.add(codeStartR)
         self.play(FadeInFrom(codeStart[0], LEFT))
@@ -243,10 +243,10 @@ class QuickSort(Scene):
 
         self.play(codeStartR.runTo(4))
         code1 = Code(file_name="my_project/code/quickSort_1.cpp",
-                     style="default").scale(0.6).to_corner(UL)
+                     style="vscode").scale(0.6).to_corner(UL)
         code1.add(CodeRunner([1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1], code1))
         code2 = Code(file_name="my_project/code/quickSort_2.cpp",
-                     style="default").scale(0.6).next_to(code1, RIGHT).align_to(code1, UP)
+                     style="vscode").scale(0.6).next_to(code1, RIGHT).align_to(code1, UP)
         code2.add(CodeRunner([1]*7, code2))
         callStack = CallStack()
         callStack.to_corner(DR)
