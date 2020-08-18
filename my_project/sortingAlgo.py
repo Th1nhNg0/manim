@@ -356,7 +356,7 @@ class QuickSort(Scene):
                 self.play(FadeOutAndShift(e, UP*6), run_time=speed)
 
         quickSort(0, len(a)-1)
-        self.wait()
+        self.wait(5)
 
 
 class Test(Scene):
