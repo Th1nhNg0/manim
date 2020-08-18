@@ -39,7 +39,7 @@ class Code(VGroup):
         "line_spacing": 0.1,
         "scale_factor": 0.5,
         "run_time": 1,
-        "font": "hack",
+        "font": "Hack",
         "stroke_width": 0,
         "margin": 0.3,
         "indentation_char": "  ",

@@ -183,7 +183,7 @@ class BubbleSort(Scene):
 class CallStack(VGroup):
     def __init__(self, **kwargs):
         VGroup.__init__(self, **kwargs)
-        self.add(Text("CallStack", font='hack', size=0.8))
+        self.add(Text("CallStack", font='Hack', size=0.8))
         self.add(BackgroundRectangle(self, color=WHITE, buff=0.3,
                                      fill_opacity=0, stroke_width=3, stroke_opacity=1))
         self.add(
@@ -194,7 +194,7 @@ class CallStack(VGroup):
 
     def push(self, text):
         t = Text(text, size=0.4,
-                 font='hack')
+                 font='Hack')
         t.add_to_back(Rectangle(color=WHITE, fill_opacity=0,
                                 stroke_width=3, stroke_opacity=1, width=self[1].get_width(), height=t.get_height()+0.4).move_to(t))
         if (self.length == 0):
@@ -277,9 +277,9 @@ class QuickSort(Scene):
             self.play(FadeToColor(
                 a[high][1], YELLOW, run_time=speed)
             )
-            ti = Text("i", font="hack", size=0.4).next_to(
+            ti = Text("i", font="Hack", size=0.4).next_to(
                 a[i][1], DOWN, buff=0.4)
-            tj = Text("j", font="hack", size=0.4).next_to(
+            tj = Text("j", font="Hack", size=0.4).next_to(
                 a[i][1], DOWN, buff=0.1)
             self.play(code1[-1].runTo(2), FadeInFrom(
                 ti, DOWN), run_time=speed)
