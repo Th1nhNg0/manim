@@ -213,7 +213,11 @@ class CallStack(VGroup):
 
 class QuickSort(Scene):
     def construct(self):
-
+        text1 = Text("Quick Sort", font="IBM Plex Sans",
+                     color="#fafafa", size=4)
+        self.play(Write(text1))
+        self.wait(2)
+        self.play(FadeOutAndShift(text1, direction=DOWN))
         a = list(range(14))
         random.seed(40)
         random.shuffle(a)
