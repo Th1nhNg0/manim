@@ -364,19 +364,3 @@ class QuickSort(Scene):
 
         quickSort(0, len(a)-1)
         self.wait(5)
-
-
-class Test(Scene):
-    def construct(self):
-        a = Code(file_name="my_project/code/quickSort_1.cpp", style="vscode")
-        b = CodeRunner([1, 1, 1, 1, 1, 1], a)
-        self.play(Write(a))
-        self.play(b.runTo(4))
-        a = a.deepcopy()
-        b = a[-1]
-        b.runTo(-1)
-        self.play(FadeInFrom(a, UP*2))
-        self.play(b.runTo(1))
-        self.play(b.runTo(-1))
-        self.play(FadeOutAndShift(a, UP*4))
-        self.wait(3)
