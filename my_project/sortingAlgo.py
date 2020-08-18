@@ -35,11 +35,11 @@ class SelectionSort(Scene):
         self.play(coderunner.runTo(5))
         code2 = Code(file_name="my_project/code/selectionSort_2.cpp",
                      style="vscode").align_to(code, DOWN+LEFT)
-        coderunner2 = CodeRunner([1, 1, 1, 3, 1, 1], code2)
+        code2[-1] = CodeRunner([1, 1, 1, 3, 1, 1], code2)
         self.play(FadeInFrom(code2, direction=UP),
                   FadeOutAndShift(code, direction=DOWN))
         code = code2
-        coderunner = coderunner2
+        coderunner = code2[-1]
         speed = 0.5
         for i in range(len(a) - 1):
             iMin = i
@@ -115,11 +115,11 @@ class BubbleSort(Scene):
         self.play(coderunner.runTo(5))
         code2 = Code(file_name="my_project/code/bubbleSort_2.cpp",
                      style="vscode").align_to(code, DOWN+LEFT)
-        coderunner2 = CodeRunner([1]*7, code2)
+        code2[-1] = CodeRunner([1]*7, code2)
         self.play(FadeInFrom(code2, direction=UP),
                   FadeOutAndShift(code, direction=DOWN))
         code = code2
-        coderunner = coderunner2
+        coderunner = code2[-1]
         speed = 0.5
         rect = (
             Rectangle(color=YELLOW, fill_opacity=0, width=1.575 + 0.2,
@@ -229,7 +229,7 @@ class QuickSort(Scene):
                         buff=0.2).to_corner(DL)
 
         codeStart = Code(file_name="my_project/code/quickSort_0.cpp",
-                         style="vscode").scale(0.7).to_corner(UL)
+                         style="default").scale(0.7).to_corner(UL)
         codeStartR = CodeRunner([1, 1, 1, 2, 1], codeStart)
         codeStart.add(codeStartR)
         self.play(FadeInFrom(codeStart[0], LEFT))
@@ -243,10 +243,10 @@ class QuickSort(Scene):
 
         self.play(codeStartR.runTo(4))
         code1 = Code(file_name="my_project/code/quickSort_1.cpp",
-                     style="vscode").scale(0.6).to_corner(UL)
+                     style="default").scale(0.6).to_corner(UL)
         code1.add(CodeRunner([1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1], code1))
         code2 = Code(file_name="my_project/code/quickSort_2.cpp",
-                     style="vscode").scale(0.6).next_to(code1, RIGHT).align_to(code1, UP)
+                     style="default").scale(0.6).next_to(code1, RIGHT).align_to(code1, UP)
         code2.add(CodeRunner([1]*7, code2))
         callStack = CallStack()
         callStack.to_corner(DR)
@@ -267,7 +267,7 @@ class QuickSort(Scene):
                       code2[0][0].set_stroke, {"opacity": 0}, run_time=speed)
             pivot = a[high]
             i = low
-            self.play(codeRunner1.runTo(1), run_time=speed)
+            self.play(code1[-1].runTo(1), run_time=speed)
             self.play(FadeToColor(
                 a[high][1], YELLOW, run_time=speed)
             )
@@ -275,10 +275,10 @@ class QuickSort(Scene):
                 a[i][1], DOWN, buff=0.4)
             tj = Text("j", font="hack", size=0.4).next_to(
                 a[i][1], DOWN, buff=0.1)
-            self.play(codeRunner1.runTo(2), FadeInFrom(
+            self.play(code1[-1].runTo(2), FadeInFrom(
                 ti, DOWN), run_time=speed)
             for j in range(low, high):
-                self.play(codeRunner1.runTo(4), run_time=speed)
+                self.play(code1[-1].runTo(4), run_time=speed)
                 if j == low:
                     self.play(FadeIn(tj), run_time=speed/2)
                 else:
@@ -287,7 +287,7 @@ class QuickSort(Scene):
                     a[j][1], YELLOW, rate_func=there_and_back_with_pause),  run_time=speed)
                 if (a[j] < pivot):
                     a[i], a[j] = a[j], a[i]
-                    self.play(codeRunner1.runTo(5), run_time=speed)
+                    self.play(code1[-1].runTo(5), run_time=speed)
                     if (a[i][1] != a[j][1]):
                         self.play(a[i][1].set_x, a[j][1].get_x(),
                                   a[j][1].set_x, a[i][1].get_x(),
@@ -297,15 +297,15 @@ class QuickSort(Scene):
                                   run_time=speed/2)
                     i += 1
             a[i], a[high] = a[high], a[i]
-            self.play(codeRunner1.runTo(8), run_time=speed)
+            self.play(code1[-1].runTo(8), run_time=speed)
             self.play(
                 FadeOutAndShift(tj, DOWN), run_time=speed/2)
             self.play(a[i][1].set_color, GREEN,
                       a[i][1].set_x, a[high][1].get_x(),
                       a[high][1].set_x, a[i][1].get_x(), run_time=speed)
-            self.play(codeRunner1.runTo(9), run_time=speed)
+            self.play(code1[-1].runTo(9), run_time=speed)
             self.play(FadeOutAndShift(e, UP*6),
-                      codeRunner1.runTo(-1), run_time=speed)
+                      code1[-1].runTo(-1), run_time=speed)
             self.play(
                 FadeOutAndShift(ti, DOWN), code1[0].set_stroke, {
                     "opacity": 0}, code2[0][0].set_stroke, {"opacity": 0.5}, run_time=speed)
@@ -323,7 +323,7 @@ class QuickSort(Scene):
                       "opacity": 1, "width": 5, "color": GREEN}, run_time=speed)
             self.play(code2[-1].runTo(1), run_time=speed)
             if (low < high):
-                self.play(codeRunner2.runTo(2), run_time=speed)
+                self.play(code2[-1].runTo(2), run_time=speed)
                 pi = partition(low, high)
                 self.play(code2[0][0].set_stroke, {
                           "opacity": 0}, code2[-1].runTo(3), run_time=speed)
