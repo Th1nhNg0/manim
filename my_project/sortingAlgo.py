@@ -282,7 +282,8 @@ class QuickSort(Scene):
                 if j == low:
                     self.play(FadeIn(tj), run_time=speed/2)
                 else:
-                    self.play(tj.next_to, a[j][1], DOWN, run_time=speed/2)
+                    self.play(tj.next_to, a[j][1], DOWN, {
+                              "buff": 0.1}, run_time=speed/2)
                 self.play(FadeToColor(
                     a[j][1], YELLOW, rate_func=there_and_back_with_pause),  run_time=speed)
                 if (a[j] < pivot):
@@ -291,9 +292,9 @@ class QuickSort(Scene):
                     if (a[i][1] != a[j][1]):
                         self.play(a[i][1].set_x, a[j][1].get_x(),
                                   a[j][1].set_x, a[i][1].get_x(),
-                                  ti.next_to, a[i+1][1], DOWN*2.5, run_time=speed)
+                                  ti.next_to, a[i+1][1], DOWN, {"buff": 0.4}, run_time=speed)
                     else:
-                        self.play(ti.next_to, a[i+1][1], DOWN*2.5,
+                        self.play(ti.next_to, a[i+1][1], DOWN, {"buff": 0.4},
                                   run_time=speed/2)
                     i += 1
             a[i], a[high] = a[high], a[i]
