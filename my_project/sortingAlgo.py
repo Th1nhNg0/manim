@@ -304,6 +304,7 @@ class QuickSort(Scene):
                       a[i][1].set_x, a[high][1].get_x(),
                       a[high][1].set_x, a[i][1].get_x(), run_time=speed)
             self.play(code1[-1].runTo(9), run_time=speed)
+            e = callStack.pop()
             self.play(FadeOutAndShift(e, UP*6),
                       code1[-1].runTo(-1), run_time=speed)
             self.play(
