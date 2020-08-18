@@ -35,7 +35,7 @@ class SelectionSort(Scene):
         self.play(coderunner.runTo(5))
         code2 = Code(file_name="my_project/code/selectionSort_2.cpp",
                      style="vscode").align_to(code, DOWN+LEFT)
-        code2[-1] = CodeRunner([1, 1, 1, 3, 1, 1], code2)
+        code2.add(CodeRunner([1, 1, 1, 3, 1, 1], code2))
         self.play(FadeInFrom(code2, direction=UP),
                   FadeOutAndShift(code, direction=DOWN))
         code = code2
@@ -92,6 +92,7 @@ class BubbleSort(Scene):
         code = Code(file_name="my_project/code/bubbleSort_1.cpp",
                     style="vscode").to_edge(RIGHT, buff=0.8).shift(DOWN/2)
         coderunner = CodeRunner([1]*8, code)
+        code.add(coderunner)
         self.play(FadeInFrom(code[0], RIGHT))
         self.play(Write(code[1]), Write(code.code))
         a = [[i, None] for i in [7, 6, 3, 2, 5, 4, 1]]
@@ -115,7 +116,7 @@ class BubbleSort(Scene):
         self.play(coderunner.runTo(5))
         code2 = Code(file_name="my_project/code/bubbleSort_2.cpp",
                      style="vscode").align_to(code, DOWN+LEFT)
-        code2[-1] = CodeRunner([1]*7, code2)
+        code2.add(CodeRunner([1]*7, code2))
         self.play(FadeInFrom(code2, direction=UP),
                   FadeOutAndShift(code, direction=DOWN))
         code = code2
