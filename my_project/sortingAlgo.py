@@ -252,22 +252,17 @@ class QuickSort(Scene):
         callStack.to_corner(DR)
         self.play(LaggedStart(FadeInFrom(code2[0], UP), AnimationGroup(
             Write(code2[1]), Write(code2.code)), lag_ratio=1))
-        self.play(FadeOutAndShift(codeStart, LEFT, run_time=1),
-                  LaggedStart(
-            FadeInFrom(code1[0], LEFT, run_time=1), AnimationGroup(Write(code1[1]), Write(code1.code), run_time=1), lag_ratio=1),
-            ShowCreation(callStack)
-        )
-
-        callStack.push("hello")
-        callStack.push("con cac")
-        callStack.push("nhin cai ")
-        callStack.push("o hay the thang nhoc")
-        self.add(callStack.pop().set_color(RED))
-        return
+        self.play(FadeOutAndShift(codeStart, LEFT),
+                  FadeInFrom(code1[0], LEFT),
+                  FadeInFrom(code1[1], LEFT), FadeInFrom(code1.code, LEFT),
+                  FadeInFrom(callStack, RIGHT)
+                  )
         speed = 0.5
 
         def partition(low,  high):
-            self.play(code1[0][0].set_stroke, {
+            e = callStack.push("partition(a, {}, {})".format(low, high))
+            self.play(FadeInFrom(e, UP*6),
+                      code1[0][0].set_stroke, {
                       "opacity": 1, "width": 5, "color": GREEN},
                       code2[0][0].set_stroke, {"opacity": 0}, run_time=speed)
             pivot = a[high]
@@ -309,26 +304,27 @@ class QuickSort(Scene):
                       a[i][1].set_x, a[high][1].get_x(),
                       a[high][1].set_x, a[i][1].get_x(), run_time=speed)
             self.play(codeRunner1.runTo(9), run_time=speed)
-            self.play(codeRunner1.runTo(-1), run_time=speed)
-            self.play(FadeOutAndShift(ti, DOWN), code1[0].set_stroke, {
-                      "opacity": 0}, code2[0][0].set_stroke, {"opacity": 0.5}, run_time=speed)
+            self.play(FadeOutAndShift(e, UP*6),
+                      codeRunner1.runTo(-1), run_time=speed)
+            self.play(
+                FadeOutAndShift(ti, DOWN), code1[0].set_stroke, {
+                    "opacity": 0}, code2[0][0].set_stroke, {"opacity": 0.5}, run_time=speed)
             return i
 
         def quickSort(low, high):
             nonlocal code2
-
+            e = callStack.push("quickSort(a, {}, {})".format(low, high))
             g = Group(*[x[1] for x in a[low:high+1]])
             tt = [g.shift, UP/3]
             if not (low == 0 and high == len(a)-1):
                 tt += [FadeInFrom(code2, UP)]
-            self.play(*tt)
+            self.play(*tt, FadeInFrom(e, UP*6), run_time=speed)
             self.play(code2[0][0].set_stroke, {
                       "opacity": 1, "width": 5, "color": GREEN}, run_time=speed)
             self.play(code2[-1].runTo(1), run_time=speed)
             if (low < high):
-                # self.play(codeRunner2.runTo(2), run_time=speed)
-                # pi = partition(low, high)
-                pi = high
+                self.play(codeRunner2.runTo(2), run_time=speed)
+                pi = partition(low, high)
                 self.play(code2[0][0].set_stroke, {
                           "opacity": 0}, code2[-1].runTo(3), run_time=speed)
                 temp = code2
@@ -351,8 +347,12 @@ class QuickSort(Scene):
                 g.shift, DOWN/3,
                 g.set_color, GREEN, code2[0][0].set_stroke, {
                     "opacity": 0, }, code2[-1].runTo(-1), run_time=speed)
+            e = callStack.pop()
             if not (low == 0 and high == len(a)-1):
-                self.play(FadeOutAndShift(code2, UP))
+                self.play(FadeOutAndShift(code2, UP),
+                          FadeOutAndShift(e, UP*6), run_time=speed)
+            else:
+                self.play(FadeOutAndShift(e, UP*6), run_time=speed)
 
         quickSort(0, len(a)-1)
         self.wait()
