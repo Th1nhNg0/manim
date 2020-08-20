@@ -6,11 +6,11 @@ import random
 
 class GraphExample(Scene):
     def construct(self):
-        G = nx.fast_gnp_random_graph(5, 0.5, 12)
-        scale = np.array([5, 3])
+        n = 15
+        G = nx.fast_gnp_random_graph(n, 0.161, 29489)
+        scale = np.array([6.5, 3.5])
         positions = {k: v * scale for k,
                      v in nx.kamada_kawai_layout(G).items()}
-
         graph = VGroup()
         nodes = VGroup()
         for k, v in positions.items():
@@ -22,20 +22,23 @@ class GraphExample(Scene):
         edges = VGroup()
         for u, v in G.edges():
             edge = Line([*positions[u], 0], [*positions[v], 0], color=GRAY)
-            v = round(np.linalg.norm(positions[u] - positions[v]), 2)
-            a = edge.get_angle()
-            a = a+PI*2 if a > PI/2 else a
-            t = Text(str(v), font="hack", size=0.4).move_to(
-                edge).rotate(a)
-            edges.add(edge, t)
+            # leng = round(np.linalg.norm(positions[u] - positions[v]), 2)
+            # a = edge.get_angle()+PI
+            # t = DecimalNumber(leng, background_stroke_width=0, color=YELLOW).scale(0.5).move_to(
+            #     edge)
+            # if (positions[u][0] >= positions[v][0]):
+            #     t.rotate(a)
+            # else:
+            #     t.rotate(a+PI)
+            # edge.add(t)
+            edges.add(edge)
         graph.add(edges, nodes)
-        graph.to_corner(UL)
-        self.play(Write(edges), Write(
-            nodes), run_time=4)
         for u, v in G.edges():
             G[u][v]['weight'] = np.linalg.norm(positions[u] - positions[v])
-        mData = nx.to_numpy_matrix(G)
-        mData = np.round(mData, 2)
-        m = Matrix(mData).scale(0.5).to_corner(DR)
-        self.add(m)
+        # mData = nx.to_numpy_matrix(G)
+        # mData = np.round(mData, 2)
+        # m = DecimalMatrix(mData).scale(
+        #     0.5).to_corner(DR)
+        self.play(Write(edges), Write(
+            nodes),  run_time=2)
         self.wait(3)
