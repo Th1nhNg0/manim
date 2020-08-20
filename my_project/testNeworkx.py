@@ -6,11 +6,11 @@ import random
 
 class GraphExample(Scene):
     def construct(self):
-        n = 15
-        G = nx.fast_gnp_random_graph(n, 0.161, 29489)
+        n = 10
+        G = nx.fast_gnp_random_graph(n, 0.3)
         scale = np.array([6.5, 3.5])
         positions = {k: v * scale for k,
-                     v in nx.kamada_kawai_layout(G).items()}
+                     v in nx.spectral_layout(G).items()}
         graph = VGroup()
         nodes = VGroup()
         for k, v in positions.items():
