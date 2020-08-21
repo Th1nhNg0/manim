@@ -1,6 +1,5 @@
 from manim import *
 import math
-from sanim.anim_tools.tables import *
 
 loop = [4, 6, 12, 24, 48, 96, 192, 786432, 50331648]
 

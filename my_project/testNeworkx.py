@@ -6,39 +6,25 @@ import random
 
 class GraphExample(Scene):
     def construct(self):
-        n = 10
-        G = nx.fast_gnp_random_graph(n, 0.3)
-        scale = np.array([6.5, 3.5])
+        G = nx.watts_strogatz_graph(n=100, k=4, p=0.6)
+        scale = np.array([3, 3])
         positions = {k: v * scale for k,
-                     v in nx.spectral_layout(G).items()}
+                     v in nx.circular_layout(G).items()}
         graph = VGroup()
         nodes = VGroup()
         for k, v in positions.items():
-            dot = Dot([*v, 0], radius=0.2)
-            text = Text(str(k), font="hack", size=0.5,
-                        color=BLACK).move_to(dot)
-            dot.add(text)
+            dot = Dot([*v, 0], radius=0.04, color=BLUE)
             nodes.add(dot)
         edges = VGroup()
         for u, v in G.edges():
-            edge = Line([*positions[u], 0], [*positions[v], 0], color=GRAY)
-            # leng = round(np.linalg.norm(positions[u] - positions[v]), 2)
-            # a = edge.get_angle()+PI
-            # t = DecimalNumber(leng, background_stroke_width=0, color=YELLOW).scale(0.5).move_to(
-            #     edge)
-            # if (positions[u][0] >= positions[v][0]):
-            #     t.rotate(a)
-            # else:
-            #     t.rotate(a+PI)
-            # edge.add(t)
+            edge = Line([*positions[u], 0], [*positions[v], 0],
+                        color=WHITE).set_stroke(WHITE, 0.5)
             edges.add(edge)
         graph.add(edges, nodes)
         for u, v in G.edges():
             G[u][v]['weight'] = np.linalg.norm(positions[u] - positions[v])
-        # mData = nx.to_numpy_matrix(G)
-        # mData = np.round(mData, 2)
-        # m = DecimalMatrix(mData).scale(
-        #     0.5).to_corner(DR)
         self.play(Write(edges), Write(
-            nodes),  run_time=2)
-        self.wait(3)
+            nodes),  run_time=3)
+        self.play(Write(edges), Write(
+            nodes),  run_time=3, rate_func=lambda t: smooth(1 - t), remover=True)
+        self.wait(0.5)

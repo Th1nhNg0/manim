@@ -14,20 +14,29 @@ from manim import *
 # Use -r <number> to specify a resolution (for example, -r 1080
 # for a 1920x1080 video)
 
+# output = output_start + ((output_end - output_start) / (input_end - input_start)) * (input - input_start)
+
 
 class Test(Scene):
     def construct(self):
-        rr = RoundedRectangle()
-        grid_title = TextMobject("This is a grid")
-        grid_title.scale(1.5)
-        grid_title.to_corner(UP + LEFT)
+        t = Triangle(stroke_width=1).scale(4)
+        n = 8
+        self.tris = [[] for _ in range(n)]
+        self.draw(t.get_bottom(), t.get_width(), 2, n)
+        self.add(t)
+        for x in self.tris[::-1]:
+            self.play(*[Write(t) for t in x])
+        self.wait(3)
 
-        self.add(rr, grid_title)  # Make sure title is on top of grid
-        self.play(
-            FadeInFromDown(grid_title),
-            ShowCreation(rr, run_time=20),
-        )
-        self.wait()
+    def draw(self, xb, length, scale, depth):
+        if depth == 0:
+            return
+        self.tris[depth-1] += [Triangle(stroke_width=1).scale(scale).flip(
+            RIGHT).move_to(xb).align_to(xb, DOWN)]
+        self.draw(xb+[-length/4, 0, 0], length/2, scale/2, depth-1)
+        self.draw(xb+[length/4, 0, 0], length/2, scale/2, depth-1)
+        self.draw(xb+[0, ((length*length-length*length/4)**0.5)/2, 0],
+                  length/2, scale/2, depth-1)
 
 
 class OpeningManimExample(Scene):
